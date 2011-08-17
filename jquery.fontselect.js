@@ -272,7 +272,7 @@
       Fontselect.prototype.selectFont = function(ev){
         
         var font = $(ev.currentTarget).data('value');
-        this.$original.val(font);
+        this.$original.val(font).change();
         this.updateSelected();
         this.toggleDrop();
       }
@@ -280,7 +280,7 @@
       Fontselect.prototype.updateSelected = function(){
         
         var font = this.$original.val();
-        $('span', this.$element).text(this.toReadable(font)).attr('style', this.toStyle(font));
+        $('span', this.$element).text(this.toReadable(font)).css(this.toStyle(font));
       }
       
       Fontselect.prototype.checkScroll = function(){
@@ -308,11 +308,12 @@
       Fontselect.prototype.fontsAsHtml = function(){
         
         var l = fonts.length;
-        var r, h = '';
+        var r, s, h = '';
         
         for(var i=0; i<l; i++){
           r = this.toReadable(fonts[i]);
-          h += '<li data-value="'+ fonts[i] +'" style="'+ this.toStyle(fonts[i]) +'">'+ r +'</li>';
+          s = this.toStyle(fonts[i]);
+          h += '<li data-value="'+ fonts[i] +'" style="font-family: '+s['font-family'] +'; font-weight: '+s['font-weight'] +'">'+ r +'</li>';
         }
         
         return h;
@@ -324,7 +325,7 @@
       
       Fontselect.prototype.toStyle = function(font){
         var t = font.split(':');
-        return "font-family: '"+ this.toReadable(t[0]) +"'; font-weight: "+(t[1] || 400)+";";
+        return {'font-family': this.toReadable(t[0]), 'font-weight': (t[1] || 400)};
       };
       
       Fontselect.prototype.getVisibleFonts = function(){
