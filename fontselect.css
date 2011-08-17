@@ -1,3 +1,12 @@
+/*
+ This css and associated images borrow heavily from the fantastic 
+ chosen select box plugin.
+ 
+ Copyright (c) 2011 Harvest http://getharvest.com
+
+ MIT License, https://github.com/harvesthq/chosen/blob/master/LICENSE.md
+*/
+
 .font-select {
   font-size: 16px;
   width: 210px;
