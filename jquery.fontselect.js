@@ -251,7 +251,12 @@
       
       Fontselect.prototype.bindEvents = function(){
       
-        $('li', this.$results).click(__bind(this.selectFont, this));
+        $('li', this.$results)
+        .click(__bind(this.selectFont, this))
+        .mouseenter(__bind(this.activateFont, this))
+        .mouseleave(__bind(this.deactivateFont, this));
+        
+        $('span', this.$select).click(__bind(this.toggleDrop, this));
         this.$arrow.click(__bind(this.toggleDrop, this));
       }
       
@@ -265,18 +270,42 @@
         } else {
           this.$element.addClass('font-select-active');
           this.$drop.show();
+          this.moveToSelected();
           this.visibleInterval = setInterval(__bind(this.getVisibleFonts, this), 500);
         }
         
         this.active = !this.active;
       }
       
-      Fontselect.prototype.selectFont = function(ev){
+      Fontselect.prototype.selectFont = function(){
         
-        var font = $(ev.currentTarget).data('value');
+        var font = $('li.active', this.$results).data('value');
         this.$original.val(font).change();
         this.updateSelected();
         this.toggleDrop();
+      }
+      
+      Fontselect.prototype.moveToSelected = function(){
+        
+        var $li, font = this.$original.val();
+        
+        if (font){
+          $li = $("li[data-value='"+ font +"']", this.$results);
+        } else {
+          $li = $("li", this.$results).first();
+        }
+
+        this.$results.scrollTop($li.addClass('active').position().top);
+      }
+      
+      Fontselect.prototype.activateFont = function(ev){
+        $('li.active', this.$results).removeClass('active');
+        $(ev.currentTarget).addClass('active');
+      }
+      
+      Fontselect.prototype.deactivateFont = function(ev){
+        
+        $(ev.currentTarget).removeClass('active');
       }
       
       Fontselect.prototype.updateSelected = function(){
