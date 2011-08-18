@@ -234,6 +234,7 @@
     var settings = {
       style: 'font-select',
       placeholder: 'Select a font',
+      lookahead: 2,
       api: 'http://fonts.googleapis.com/css?family='
     };
     
@@ -250,7 +251,6 @@
       
       Fontselect.prototype.bindEvents = function(){
       
-        this.$results.scroll(__bind(this.checkScroll, this));
         $('li', this.$results).click(__bind(this.selectFont, this));
         this.$arrow.click(__bind(this.toggleDrop, this));
       }
@@ -260,10 +260,12 @@
         if(this.active){
           this.$element.removeClass('font-select-active');
           this.$drop.hide();
+          clearInterval(this.visibleInterval);
+          
         } else {
           this.$element.addClass('font-select-active');
           this.$drop.show();
-          this.getVisibleFonts();
+          this.visibleInterval = setInterval(__bind(this.getVisibleFonts, this), 500);
         }
         
         this.active = !this.active;
@@ -281,16 +283,6 @@
         
         var font = this.$original.val();
         $('span', this.$element).text(this.toReadable(font)).css(this.toStyle(font));
-      }
-      
-      Fontselect.prototype.checkScroll = function(){
-      
-        var t = (new Date()).getTime();
-
-        if(!this.scroll_last || t-this.scroll_last > 250){
-          this.getVisibleFonts();
-          this.scroll_last = t;
-        }
       }
       
       Fontselect.prototype.setupHtml = function(){
@@ -334,7 +326,12 @@
         
         var fs = this;
         var top = this.$results.scrollTop();
-        var bottom = top + this.$results.height()
+        var bottom = top + this.$results.height();
+        
+        if(this.options.lookahead){
+          var li = $('li', this.$results).first().height();
+          bottom += li*this.options.lookahead;
+        }
        
         $('li', this.$results).each(function(){
 
