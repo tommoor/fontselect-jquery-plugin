@@ -247,13 +247,10 @@
         this.setupHtml();
         this.getVisibleFonts();
         this.bindEvents();
-        this.moveToSelected();
-        var font = $('li.active', this.$results).data('value');
+        var font = this.$original.val();
         if (font) {
-          this.addFontLink(font);
-          this.$original.val(font).change();
           this.updateSelected();
-          this.getVisibleFonts();
+          this.addFontLink(font);
         }
       }
       
