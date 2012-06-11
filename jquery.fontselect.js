@@ -247,6 +247,11 @@
         this.setupHtml();
         this.getVisibleFonts();
         this.bindEvents();
+        var font = this.$original.val();
+        if (font) {
+          this.updateSelected();
+          this.addFontLink(font);
+        }
       }
       
       Fontselect.prototype.bindEvents = function(){
