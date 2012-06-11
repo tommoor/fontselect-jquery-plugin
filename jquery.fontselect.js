@@ -247,6 +247,7 @@
         this.setupHtml();
         this.getVisibleFonts();
         this.bindEvents();
+
         var font = this.$original.val();
         if (font) {
           this.updateSelected();
@@ -263,7 +264,7 @@
         
         $('span', this.$select).click(__bind(this.toggleDrop, this));
         this.$arrow.click(__bind(this.toggleDrop, this));
-      }
+      };
       
       Fontselect.prototype.toggleDrop = function(ev){
         
@@ -280,7 +281,7 @@
         }
         
         this.active = !this.active;
-      }
+      };
       
       Fontselect.prototype.selectFont = function(){
         
@@ -288,7 +289,7 @@
         this.$original.val(font).change();
         this.updateSelected();
         this.toggleDrop();
-      }
+      };
       
       Fontselect.prototype.moveToSelected = function(){
         
@@ -301,28 +302,28 @@
         }
 
         this.$results.scrollTop($li.addClass('active').position().top);
-      }
+      };
       
       Fontselect.prototype.activateFont = function(ev){
         $('li.active', this.$results).removeClass('active');
         $(ev.currentTarget).addClass('active');
-      }
+      };
       
       Fontselect.prototype.deactivateFont = function(ev){
         
         $(ev.currentTarget).removeClass('active');
-      }
+      };
       
       Fontselect.prototype.updateSelected = function(){
         
         var font = this.$original.val();
         $('span', this.$element).text(this.toReadable(font)).css(this.toStyle(font));
-      }
+      };
       
       Fontselect.prototype.setupHtml = function(){
       
         this.$original.empty().hide();
-        this.$element = $('<div>', {'class': this.options.style})
+        this.$element = $('<div>', {'class': this.options.style});
         this.$arrow = $('<div><b></b></div>');
         this.$select = $('<a><span>'+ this.options.placeholder +'</span></a>');
         this.$drop = $('<div>', {'class': 'fs-drop'});
@@ -384,9 +385,9 @@
       
         var link = this.options.api + font;
       
-        if($("link[href*='" + font + "']").length === 0){
-		      $('link:last').after('<link href="' + link + '" rel="stylesheet" type="text/css">');
-	      }
+        if ($("link[href*='" + font + "']").length === 0){
+			$('link:last').after('<link href="' + link + '" rel="stylesheet" type="text/css">');
+		}
       };
     
       return Fontselect;
