@@ -235,7 +235,7 @@
       style: 'font-select',
       placeholder: 'Select a font',
       lookahead: 2,
-      api: 'http://fonts.googleapis.com/css?family='
+      api: '//fonts.googleapis.com/css?family='
     };
     
     var Fontselect = (function(){
