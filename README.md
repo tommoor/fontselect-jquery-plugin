@@ -1,3 +1,6 @@
+> Note: This project is no longer maintained, there is a version being updated and with additional options by Arjan Haverkamp, here: https://github.com/av01d/fontselect-jquery-plugin
+
+
 # Fontselect jQuery Plugin
 
 A font selector to choose from fonts available as part of the Google Web Fonts api. 
